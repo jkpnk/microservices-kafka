@@ -9,8 +9,8 @@ namespace OrderApi.OrderServices
         private const string AddProductTopic = "add-product-topic";
         private const string DeleteProductTopic = "delete-product-topic";
 
-        public List<Product> Products { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Product> Products = [];
+        public List<Order> Orders = [];
 
         public async Task StartConsumingService()
         {
@@ -24,6 +24,7 @@ namespace OrderApi.OrderServices
                     // check if topic == add product
                     if (response.Topic == AddProductTopic)
                     {
+                        Console.WriteLine($"product: {response.Message.Value}");
                         var product = JsonSerializer.Deserialize<Product>(response.Message.Value);
                         Products.Add(product!);
                     }
